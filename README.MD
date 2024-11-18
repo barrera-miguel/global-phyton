@@ -3,10 +3,10 @@
 Este proyecto implementa un sistema para detectar mutaciones en ADN, generar mutantes a partir de mutaciones específicas y sanarlos para obtener un ADN saludable.
 
 ## **Participantes del grupo**
-1. Persona 1
-2. Persona 2
-3. Persona 3
-4. Persona 4
+1. Barrera Oltra, Miguel
+2. Barros Hernandez, María Emilia
+3. Frankenberger, Federico Agustin
+4. Maricchiolo, Guadalupe
 
 ## **Estructura del repositorio**
 El repositorio contiene los siguientes archivos principales:
@@ -20,6 +20,16 @@ El repositorio contiene los siguientes archivos principales:
 1. **Requisitos previos**: Tener Python 3.x instalado en el sistema.
 2. **Clonar el repositorio**:
    ```bash
-   git clone <URL_DEL_REPOSITORIO>
-   cd <CARPETA_DEL_REPOSITORIO>
+   git clone https://github.com/barrera-miguel/global-python.git
+   cd global-python
+3. **Ejecutar el programa**:
+   ```bash
+   python ejecutable.py
 
+## **Opciones del programa**
+Al ejecutar el programa, el usuario podrá elegir entre varias opciones para interactuar con el sistema de ADN:
+
+1. **Detectar mutaciones**: Analiza si el ADN contiene mutaciones.
+2. **Crear mutación**: Permite generar mutaciones específicas en el ADN.
+3. **Sanar ADN**: Repara mutaciones en el ADN para devolverlo a su estado saludable.
+4. **Salir**: Finaliza el programa
