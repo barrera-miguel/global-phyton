@@ -68,12 +68,7 @@ class Mutador:
 class Radiacion(Mutador):
     """Clase que representa la radiación y crea mutantes horizontales y verticales."""
 
-    def crear_mutante(
-        self,
-        matriz: list[str],
-        posicion_inicial: tuple[int, int],
-        orientacion_de_la_mutacion: str,
-    ) -> list[str]:
+    def crear_mutante(self, matriz: list[str], posicion_inicial: tuple[int, int], orientacion_de_la_mutacion: str,) -> list[str]:
         """
         Crea una mutación en la matriz.
 
@@ -85,12 +80,16 @@ class Radiacion(Mutador):
         try:
             x, y = posicion_inicial
             if orientacion_de_la_mutacion == "H":
+                if y + 4 > len(matriz[x]):
+                    raise ValueError("Mutación horizontal excede los límites de la matriz.")
                 matriz[x] = (
                     matriz[x][:y]
                     + self.base_nitrogenada * 4
                     + matriz[x][y + 4:]
                 )
             elif orientacion_de_la_mutacion == "V":
+                if x + 4 > len(matriz):
+                    raise ValueError("Mutación vertical excede los límites de la matriz.")
                 for i in range(4):
                     matriz[x + i] = (
                         matriz[x + i][:y]
@@ -107,9 +106,7 @@ class Radiacion(Mutador):
 class Virus(Mutador):
     """Clase que representa un virus y crea mutantes diagonales."""
 
-    def crear_mutante(
-        self, matriz: list[str], posicion_inicial: tuple[int, int]
-    ) -> list[str]:
+    def crear_mutante(self, matriz: list[str], posicion_inicial: tuple[int, int]) -> list[str]:
         """
         Crea una mutación diagonal en la matriz.
 
@@ -119,6 +116,8 @@ class Virus(Mutador):
         """
         try:
             x, y = posicion_inicial
+            if x + 4 > len(matriz) or y + 4 > len(matriz[0]):
+                raise ValueError("Mutación diagonal excede los límites de la matriz.")
             for i in range(4):
                 matriz[x + i] = (
                     matriz[x + i][:y + i]

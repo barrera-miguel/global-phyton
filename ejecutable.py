@@ -15,7 +15,7 @@ def ingresar_matriz() -> list[str]:
                 matriz.append(fila)
                 break
             else:
-                print("Error: La fila debe tener exactamente 6 caracteres y solo contener A, T, C o G.")
+                print("\nError: La fila debe tener exactamente 6 caracteres y solo contener A, T, C o G.")
     return matriz
 
 
@@ -28,11 +28,10 @@ def mostrar_matriz(matriz: list[str]) -> None:
     print("\nMatriz de ADN actual:")
     for fila in matriz:
         print(" ".join(fila))
-    print()
 
 
 def main():
-    print("Bienvenido al programa de análisis de ADN")
+    print("\nBienvenido al programa de análisis de ADN")
 
     # El usuario ingresa la matriz inicial.
     # matriz = ingresar_matriz()
@@ -78,16 +77,19 @@ def main():
                                 # Si no hubo error, salimos del bucle
                                 break
                             except ValueError as e:
-                                print(f"Error: {e}. Por favor ingrese un número entero válido entre 0 y 5.")
+                                print(f"\nError: {e}. Por favor ingrese un número entero válido entre 0 y 5.")
                     while True:
                         orientacion = input("Orientación ('H' para horizontal, 'V' para vertical): ").strip().upper()
                         if orientacion in ['H', 'V']:
                             break
                         else:
-                            print("Error: La orientación debe ser 'H' para horizontal o 'V' para vertical. Intente nuevamente.")
+                            print("\nError: La orientación debe ser 'H' para horizontal o 'V' para vertical. Intente nuevamente.")
                     radiacion = Radiacion(base)
-                    matriz = radiacion.crear_mutante(matriz, (x, y), orientacion)
-                    # print("Mutación aplicada.")
+                    try:
+                        matriz = radiacion.crear_mutante(matriz, (x, y), orientacion)
+                        print("\nMutación aplicada correctamente.")
+                    except ValueError as e:
+                        print(f"\nError: {e}")
                     break
                 elif sub_opcion == "2":
                     base = input("Ingrese la base nitrogenada para la mutación (A, T, C, G): ").strip().upper()
@@ -97,24 +99,27 @@ def main():
                     x = int(input("Fila inicial de la mutación diagonal (0-5): "))
                     y = int(input("Columna inicial de la mutación diagonal (0-5): "))
                     virus = Virus(base)
-                    matriz = virus.crear_mutante(matriz, (x, y))
-                    # print("Mutación aplicada.")
+                    try:
+                        matriz = virus.crear_mutante(matriz, (x, y))
+                        print("\nMutación aplicada correctamente.")
+                    except ValueError as e:
+                        print(f"Error: {e}")
                     break
                 elif sub_opcion == "3":
                     break
                 else:
-                    print("Opción inválida, intente nuevamente.")
+                    print("\nOpción inválida, intente nuevamente.")
                     continue
         elif opcion == "3":
             # Sanar ADN
             sanador = Sanador()
             matriz = sanador.sanar_mutantes(matriz)
-            print("El ADN ha sido sanado.")
+            print("\nEl ADN ha sido sanado.")
         elif opcion == "4":
-            print("Saliendo del programa...")
+            print("\nSaliendo del programa...")
             break
         else:
-            print("Opción inválida, intente nuevamente.")
+            print("\nOpción inválida, intente nuevamente.")
 
         # Mostrar la matriz actualizada
         mostrar_matriz(matriz)
