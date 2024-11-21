@@ -33,10 +33,7 @@ def mostrar_matriz(matriz: list[str]) -> None:
 def main():
     print("\nBienvenido al programa de análisis de ADN")
 
-    # El usuario ingresa la matriz inicial.
-    # matriz = ingresar_matriz()
-    matriz = ["GGATCC", "ATGTCG", "TGTCAG", "GTCATA", "ATATCG", "CTTATC"]
-
+    matriz = ingresar_matriz()
 
     while True:
         print("\nMenú:")
@@ -70,11 +67,9 @@ def main():
                                 x = int(input("Fila inicial de la mutación (0-5): "))
                                 y = int(input("Columna inicial de la mutación (0-5): "))
 
-                                # Verificar que las coordenadas estén dentro del rango permitido (0-5)
                                 if x < 0 or x > 5 or y < 0 or y > 5:
                                     raise ValueError("Las coordenadas deben estar en el rango de 0 a 5.")
                                 
-                                # Si no hubo error, salimos del bucle
                                 break
                             except ValueError as e:
                                 print(f"\nError: {e}. Por favor ingrese un número entero válido entre 0 y 5.")
@@ -121,7 +116,6 @@ def main():
         else:
             print("\nOpción inválida, intente nuevamente.")
 
-        # Mostrar la matriz actualizada
         mostrar_matriz(matriz)
 
 
