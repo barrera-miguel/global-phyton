@@ -8,8 +8,10 @@ class Detector:
         Inicializa un Detector.
 
         :param dimensiones: Dimensiones de la matriz de ADN (filas, columnas).
+        :param detecciones_realizadas: Contador de las detecciones de mutaciones realizadas.
         """
         self.dimensiones = dimensiones
+        self.detecciones_realizadas = 0
 
     def detectar_mutantes(self, matriz: list[str]) -> bool:
         """
@@ -18,6 +20,7 @@ class Detector:
         :param matriz: Matriz de ADN representada como una lista de strings.
         :return: True si contiene mutantes, False en caso contrario.
         """
+        self.detecciones_realizadas += 1
         return any(
             [
                 self._check_horizontal(matriz),
@@ -53,13 +56,18 @@ class Detector:
 class Mutador:
     """Clase base para mutadores de ADN."""
 
-    def __init__(self, base_nitrogenada: str):
+    def __init__(self, base_nitrogenada: str, posicion_inicial: tuple[int, int], orientacion_de_la_mutacion: str):
         """
         Inicializa un Mutador.
 
         :param base_nitrogenada: Base nitrogenada que se repetirá en la mutación.
+        :param posicion_inicial: Coordenadas (fila, columna) de la mutación.
+        :param orientacion_de_la_mutacion: Orientación de la mutación ('H' para horizontal o 'V' para vertical).
         """
         self.base_nitrogenada = base_nitrogenada
+        self.posicion_inicial = posicion_inicial
+        self.orientacion_de_la_mutacion = orientacion_de_la_mutacion
+
 
     def crear_mutante(self):
         raise NotImplementedError("Este método debe implementarse en las subclases.")
@@ -68,18 +76,16 @@ class Mutador:
 class Radiacion(Mutador):
     """Clase que representa la radiación y crea mutantes horizontales y verticales."""
 
-    def crear_mutante(self, matriz: list[str], posicion_inicial: tuple[int, int], orientacion_de_la_mutacion: str,) -> list[str]:
+    def crear_mutante(self, matriz: list[str]) -> list[str]:
         """
         Crea una mutación en la matriz.
 
         :param matriz: Matriz de ADN original.
-        :param posicion_inicial: Coordenadas (fila, columna) de la mutación.
-        :param orientacion_de_la_mutacion: 'H' para horizontal o 'V' para vertical.
         :return: Matriz con la mutación aplicada.
         """
         try:
-            x, y = posicion_inicial
-            if orientacion_de_la_mutacion == "H":
+            x, y = self.posicion_inicial
+            if self.orientacion_de_la_mutacion == "H":
                 if y + 4 > len(matriz[x]):
                     raise ValueError("Mutación horizontal excede los límites de la matriz.")
                 matriz[x] = (
@@ -87,7 +93,7 @@ class Radiacion(Mutador):
                     + self.base_nitrogenada * 4
                     + matriz[x][y + 4:]
                 )
-            elif orientacion_de_la_mutacion == "V":
+            elif self.orientacion_de_la_mutacion == "V":
                 if x + 4 > len(matriz):
                     raise ValueError("Mutación vertical excede los límites de la matriz.")
                 for i in range(4):
@@ -106,16 +112,18 @@ class Radiacion(Mutador):
 class Virus(Mutador):
     """Clase que representa un virus y crea mutantes diagonales."""
 
-    def crear_mutante(self, matriz: list[str], posicion_inicial: tuple[int, int]) -> list[str]:
+    def __init__(self, base_nitrogenada: str, posicion_inicial: tuple[int, int]):
+        super().__init__(base_nitrogenada, posicion_inicial, orientacion_de_la_mutacion=None)
+
+    def crear_mutante(self, matriz: list[str]) -> list[str]:
         """
         Crea una mutación diagonal en la matriz.
 
         :param matriz: Matriz de ADN original.
-        :param posicion_inicial: Coordenadas (fila, columna) de la mutación.
         :return: Matriz con la mutación aplicada.
         """
         try:
-            x, y = posicion_inicial
+            x, y = self.posicion_inicial
             if x + 4 > len(matriz) or y + 4 > len(matriz[0]):
                 raise ValueError("Mutación diagonal excede los límites de la matriz.")
             for i in range(4):
@@ -137,6 +145,7 @@ class Sanador:
         Inicializa un Sanador.
         """
         self.detector = Detector()
+        self.sanaciones_realizadas = 0
 
     def sanar_mutantes(self, matriz: list[str]) -> list[str]:
         """
@@ -156,4 +165,5 @@ class Sanador:
             nueva_matriz = [
                 ''.join(random.choice(bases) for _ in range(6)) for _ in range(6)
             ]
+        self.sanaciones_realizadas += 1
         return nueva_matriz

@@ -65,12 +65,16 @@ def main():
                         continue
                     while True:
                             try:
-                                x = int(input("Fila inicial de la mutación (0-5): "))
-                                y = int(input("Columna inicial de la mutación (0-5): "))
+                                x = input("Fila inicial de la mutación diagonal (0-5): ").strip()
+                                y = input("Columna inicial de la mutación diagonal (0-5): ").strip()
+
+                                if not x.isdigit() or not y.isdigit():
+                                    raise ValueError("Debe ingresar un número entero.")
+                                
+                                x, y = int(x), int(y)
 
                                 if x < 0 or x > 5 or y < 0 or y > 5:
                                     raise ValueError("Las coordenadas deben estar en el rango de 0 a 5.")
-                                
                                 break
                             except ValueError as e:
                                 print(f"\nError: {e}. Por favor ingrese un número entero válido entre 0 y 5.")
@@ -80,9 +84,9 @@ def main():
                             break
                         else:
                             print("\nError: La orientación debe ser 'H' para horizontal o 'V' para vertical. Intente nuevamente.")
-                    radiacion = Radiacion(base)
+                    radiacion = Radiacion(base, (x, y), orientacion)
                     try:
-                        matriz = radiacion.crear_mutante(matriz, (x, y), orientacion)
+                        matriz = radiacion.crear_mutante(matriz)
                         print("\nMutación aplicada correctamente.")
                     except ValueError as e:
                         print(f"\nError: {e}")
@@ -92,11 +96,24 @@ def main():
                     if base not in "ATCG":
                         print("Base nitrogenada inválida.")
                         continue
-                    x = int(input("Fila inicial de la mutación diagonal (0-5): "))
-                    y = int(input("Columna inicial de la mutación diagonal (0-5): "))
-                    virus = Virus(base)
+                    while True:
+                        try:
+                            x = input("Fila inicial de la mutación diagonal (0-5): ").strip()
+                            y = input("Columna inicial de la mutación diagonal (0-5): ").strip()
+        
+                            if not x.isdigit() or not y.isdigit():
+                                raise ValueError("Debe ingresar un número entero.")
+                            
+                            x, y = int(x), int(y)
+
+                            if x < 0 or x > 5 or y < 0 or y > 5:
+                                raise ValueError("Las coordenadas deben estar en el rango de 0 a 5.")
+                            break
+                        except ValueError as e:
+                            print(f"\nError: {e}. Por favor ingrese un número entero válido entre 0 y 5.")
+                    virus = Virus(base, (x, y))
                     try:
-                        matriz = virus.crear_mutante(matriz, (x, y))
+                        matriz = virus.crear_mutante(matriz)
                         print("\nMutación aplicada correctamente.")
                     except ValueError as e:
                         print(f"Error: {e}")
