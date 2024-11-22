@@ -1,3 +1,4 @@
+from colorama import init, Fore, Back, Style
 from clases import Detector, Radiacion, Virus, Sanador
 
 def ingresar_matriz() -> list[str]:
@@ -6,7 +7,7 @@ def ingresar_matriz() -> list[str]:
 
     :return: Lista de cadenas que representan la matriz de ADN.
     """
-    print("Ingrese las filas de la matriz de ADN (6 cadenas de 6 caracteres, usando A, T, C, G):")
+    print (Fore.CYAN + "Ingrese las filas de la matriz de ADN (6 cadenas de 6 caracteres, usando A, T, C, G):")
     matriz = []
     for i in range(6):
         while True:
@@ -31,23 +32,23 @@ def mostrar_matriz(matriz: list[str]) -> None:
 
 
 def main():
-    print("\nBienvenido al programa de análisis de ADN")
+    print(Style.BRIGHT + Fore.CYAN +"\nBienvenido al programa de análisis de ADN")
 
     matriz = ingresar_matriz()
 
     while True:
-        print("\nMenú:")
-        print("1. Detectar mutaciones")
-        print("2. Crear mutación")
-        print("3. Sanar ADN")
-        print("4. Salir")
+        print(Fore.RED +"\nMenú:")
+        print(Fore.LIGHTYELLOW_EX +"1. Detectar mutaciones")
+        print(Fore.LIGHTYELLOW_EX +"2. Crear mutación")
+        print(Fore.LIGHTYELLOW_EX +"3. Sanar ADN")
+        print(Fore.RED +"4. Salir")
         opcion = input("Seleccione una opción: ")
 
         if opcion == "1":
             # Detectar mutaciones
             detector = Detector()
             tiene_mutaciones = detector.detectar_mutantes(matriz)
-            print("\n¿El ADN tiene mutaciones?", "Sí" if tiene_mutaciones else "No")
+            print(Fore.GREEN + "\n¿El ADN tiene mutaciones?", "Sí" if tiene_mutaciones else "No")
         elif opcion == "2":
             # Crear mutación
             while True:
@@ -109,12 +110,12 @@ def main():
             # Sanar ADN
             sanador = Sanador()
             matriz = sanador.sanar_mutantes(matriz)
-            print("\nEl ADN ha sido sanado.")
+            print(Fore.GREEN +"\nEl ADN ha sido sanado.")
         elif opcion == "4":
-            print("\nSaliendo del programa...")
+            print(Fore.GREEN + "\nSaliendo del programa...")
             break
         else:
-            print("\nOpción inválida, intente nuevamente.")
+            print(Fore.GREEN + "\nOpción inválida, intente nuevamente.")
 
         mostrar_matriz(matriz)
 
