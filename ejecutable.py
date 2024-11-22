@@ -1,4 +1,4 @@
-from colorama import init, Fore, Back, Style
+from colorama import Fore, Style
 from clases import Detector, Radiacion, Virus, Sanador
 
 def ingresar_matriz() -> list[str]:
